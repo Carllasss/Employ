@@ -8,7 +8,7 @@ class User(BaseModel):
     id: Optional[str] = None
     name: str
     email: EmailStr
-    #hashed_password: str
+    hashed_password: str
     is_company: bool = False
     created_at: datetime.datetime
     updated_at: datetime.datetime

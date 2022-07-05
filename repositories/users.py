@@ -3,7 +3,6 @@ import datetime
 import asyncpg.exceptions
 from starlette.responses import JSONResponse
 
-
 from .base import BaseRepository
 from db.users import users
 from typing import List, Optional
@@ -18,20 +17,18 @@ class UserRepository(BaseRepository):
         return await self.database.fetch_all(query=query)
 
     async def get_by_id(self, id: int) -> Optional[User]:
-        query = users.select().where(users.c.id == id).first()
+        query = users.select().where(users.c.id == id)
         user = await self.database.fetch_one(query=query)
         if user is None:
             return None
         return User.parse_obj(user)
-
 
     async def get_by_email(self, email: str) -> Optional[User]:
-        query = users.select().where(users.c.email == email).first()
+        query = users.select().where(users.c.email == email)
         user = await self.database.fetch_one(query=query)
         if user is None:
             return None
         return User.parse_obj(user)
-
 
     async def create(self, u: UserIn) -> User:
         user = User(
@@ -67,4 +64,3 @@ class UserRepository(BaseRepository):
         query = users.update().where(users.c.id == id).values(**values)
         await self.database.execute(query)
         return user
-
