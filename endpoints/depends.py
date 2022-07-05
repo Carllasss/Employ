@@ -1,13 +1,18 @@
 from fastapi import Depends, HTTPException, status
-
+from repositories.jobs import JobRepository
 from repositories.users import UserRepository
 from db.base import database
 from schemas.user import User
+from schemas.jobs import Job
 from utils.security import JWTBearer, decode_access_token
 
 
 def get_user_repository() -> UserRepository:
     return UserRepository(database)
+
+
+def get_job_repository() -> JobRepository:
+    return JobRepository(database)
 
 
 async def get_current_user(
